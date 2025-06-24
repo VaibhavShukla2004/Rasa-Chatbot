@@ -1,0 +1,17 @@
+version: "3.1"
+
+rules:
+- rule: answer deposit channel query
+  steps:
+  - intent: deposit_channels
+  - action: utter_deposit_channels
+
+- rule: answer NEFT without channels query
+  steps:
+  - intent: use_neft_without_channels
+  - action: utter_use_neft_without_channels
+
+- rule: answer challan not generated query
+  steps:
+  - intent: challan_not_generated
+  - action: utter_challan_not_generated

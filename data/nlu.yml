@@ -1,0 +1,20 @@
+version: "3.1"
+
+nlu:
+- intent: deposit_channels
+  examples: |
+    - What are the channels available to depositors?
+    - How can a depositor deposit money?
+    - What modes of deposit are there?
+
+- intent: use_neft_without_channels
+  examples: |
+    - Can depositor use NEFT or RTGS if they don’t have other channels?
+    - Can I pay with NEFT if I don’t have net banking?
+    - How to pay without debit or credit card?
+
+- intent: challan_not_generated
+  examples: |
+    - I paid through NEFT but didn’t get the challan
+    - I filled all NEFT details but didn’t get the challan
+    - Challan not generated after NEFT payment
