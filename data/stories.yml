@@ -15,3 +15,38 @@ stories:
   steps:
   - intent: challan_not_generated
   - action: utter_challan_not_generated
+
+- story: Respond to challan not printable
+  steps:
+  - intent: print_challan_issue
+  - action: utter_print_challan_issue
+
+- story: Respond to procedure to generate challan
+  steps:
+  - intent: generate_challan_neft
+  - action: utter_generate_challan_neft
+
+- story: Respond to challan still not printable
+  steps:
+  - intent: challan_still_not_printable
+  - action: utter_challan_still_not_printable
+
+- story: Respond to transaction not found for UTR update
+  steps:
+  - intent: transaction_not_found
+  - action: utter_transaction_not_found
+
+- story: Respond to incomplete NEFT payment
+  steps:
+  - intent: incomplete_neft_payment
+  - action: utter_incomplete_neft_payment
+
+- story: Respond to role of aggregator
+  steps:
+  - intent: role_of_aggregator
+  - action: utter_role_of_aggregator
+
+- story: Respond to aggregator payment modes
+  steps:
+  - intent: aggregator_payment_modes
+  - action: utter_aggregator_payment_modes

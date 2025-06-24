@@ -25,6 +25,29 @@ responses:
         like account number and IFSC code, the same account number should be debited while making payment.
         Sometimes users fill one account in the form but pay from another — this causes challan failure.
 
+  utter_print_challan_issue:
+    - text: "Please enter the correct UTR number under 'Track Your Payment' on Bharatkosh to print the challan."
+
+  utter_generate_challan_neft:
+    - text: "Visit https://bharatkosh.gov.in/TrackTransaction/VerifyUser, fill your details, verify with OTP, and enter the UTR number to generate your challan."
+
+  utter_challan_still_not_printable:
+    - text: "Verify that the UTR number entered is correct. If it's accurate and still no challan is generated, contact the Bharatkosh team."
+
+  utter_transaction_not_found:
+    - text: "The transaction may have been wiped from the system if the UTR number wasn't updated within 15 days."
+
+  utter_incomplete_neft_payment:
+    - text: "Please generate the mandate form with correct details and update the UTR number received from the bank."
+
+  utter_role_of_aggregator:
+    - text: "The aggregator provides a unified payment page offering multiple payment options to Bharatkosh depositors."
+
+  utter_aggregator_payment_modes:
+    - text: "Aggregators support payments through Credit/Debit Cards (MasterCard, VISA, RuPay), Internet Banking, and other services of empanelled banks."
+
+
+
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
