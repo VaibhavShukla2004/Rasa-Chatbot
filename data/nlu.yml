@@ -1,6 +1,12 @@
 version: "3.1"
 
 nlu:
+- intent: greet
+  examples: |
+    - Hello
+    - Hi
+    - Wassup
+
 - intent: deposit_channels
   examples: |
     - What are the channels available to depositors?
@@ -21,48 +27,63 @@ nlu:
 
 - intent: neft_without_access
   examples: |
-      - Can I use NEFT if I don’t have access to online channels?
-      - What if I don’t have internet banking or cards?
-      - Can a depositor use NEFT/RTGS without these channels?
+    - Can I use NEFT if I don’t have access to online channels?
+    - What if I don’t have internet banking or cards?
+    - Can a depositor use NEFT/RTGS without these channels?
 
 - intent: neft_challan_issue
   examples: |
-      - I paid through NEFT and can't print my challan
-      - Why can't I print GAR7 after NEFT?
-      - I completed NEFT but no challan copy
+    - I paid through NEFT and can't print my challan
+    - Why can't I print GAR7 after NEFT?
+    - I completed NEFT but no challan copy
 
 - intent: generate_neft_challan
   examples: |
-      - How to generate NEFT challan?
-      - What is the process to get a GAR-7 after NEFT?
-      - Steps to generate NEFT challan?
+    - How to generate NEFT challan?
+    - What is the process to get a GAR-7 after NEFT?
+    - Steps to generate NEFT challan?
 
 - intent: utr_entered_but_no_challan
   examples: |
-      - I entered UTR but still can't print GAR7
-      - UTR number is added but no challan
-      - I gave the UTR, still no receipt
+    - I entered UTR but still can't print GAR7
+    - UTR number is added but no challan
+    - I gave the UTR, still no receipt
 
 - intent: no_transaction_for_utr
   examples: |
-      - My transaction doesn’t show for UTR entry
-      - I can’t find the transaction to enter UTR
-      - Why isn’t my payment visible to update UTR?
+    - My transaction doesn’t show for UTR entry
+    - I can’t find the transaction to enter UTR
+    - Why isn’t my payment visible to update UTR?
 
 - intent: incomplete_neft_payment
   examples: |
-      - I paid via NEFT but didn’t generate mandate form
-      - I didn’t update UTR for NEFT payment
-      - What if I missed generating mandate before NEFT?
+    - I paid via NEFT but didn’t generate mandate form
+    - I didn’t update UTR for NEFT payment
+    - What if I missed generating mandate before NEFT?
 
 - intent: aggregator_role
   examples: |
-      - What is the aggregator's role?
-      - Who is the payment aggregator?
-      - What does aggregator do on Bharatkosh?
+    - What is the aggregator's role?
+    - Who is the payment aggregator?
+    - What does aggregator do on Bharatkosh?
 
 - intent: aggregator_payment_modes
   examples: |
-      - What payment options are on the aggregator page?
-      - Which cards or net banking is allowed?
-      - Available modes on aggregator platform?
+    - What payment options are on the aggregator page?
+    - Which cards or net banking is allowed?
+    - Available modes on aggregator platform?
+
+- intent: not_helpful
+  examples: |
+    - This didn't help
+    - I'm still stuck
+    - It's not working
+    - That wasn't useful
+    - Nothing worked
+    - My problem is not solved
+    - Still facing the issue
+    - Didn't get any solution
+    - not helpful
+    - nothing works
+
+

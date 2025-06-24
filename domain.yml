@@ -1,11 +1,25 @@
 version: "3.1"
 
 intents:
+  - greet
   - deposit_channels
   - use_neft_without_channels
   - challan_not_generated
+  - neft_without_access
+  - neft_challan_issue
+  - generate_neft_challan
+  - utr_entered_but_no_challan
+  - no_transaction_for_utr
+  - incomplete_neft_payment
+  - aggregator_role
+  - aggregator_payment_modes
+  - not_helpful
 
 responses:
+
+  utter_greet:
+    - text: "Hey! How can I help you today?"
+
   utter_deposit_channels:
     - text: >-
         The Internet Banking (Individual/Corporate), Debit and Credit Cards
@@ -25,27 +39,38 @@ responses:
         like account number and IFSC code, the same account number should be debited while making payment.
         Sometimes users fill one account in the form but pay from another — this causes challan failure.
 
-  utter_print_challan_issue:
+  utter_neft_without_access:
+    - text: "NEFT/RTGS can still be used. Generate challan on Bharatkosh and use UTR entry."
+
+  utter_neft_challan_issue:
     - text: "Please enter the correct UTR number under 'Track Your Payment' on Bharatkosh to print the challan."
 
-  utter_generate_challan_neft:
+  utter_generate_neft_challan:
     - text: "Visit https://bharatkosh.gov.in/TrackTransaction/VerifyUser, fill your details, verify with OTP, and enter the UTR number to generate your challan."
 
-  utter_challan_still_not_printable:
+  utter_utr_entered_but_no_challan:
     - text: "Verify that the UTR number entered is correct. If it's accurate and still no challan is generated, contact the Bharatkosh team."
 
-  utter_transaction_not_found:
+  utter_no_transaction_for_utr:
     - text: "The transaction may have been wiped from the system if the UTR number wasn't updated within 15 days."
 
   utter_incomplete_neft_payment:
     - text: "Please generate the mandate form with correct details and update the UTR number received from the bank."
 
-  utter_role_of_aggregator:
+  utter_aggregator_role:
     - text: "The aggregator provides a unified payment page offering multiple payment options to Bharatkosh depositors."
 
   utter_aggregator_payment_modes:
     - text: "Aggregators support payments through Credit/Debit Cards (MasterCard, VISA, RuPay), Internet Banking, and other services of empanelled banks."
 
+  utter_provide_faq:
+    - text: "You can check our FAQs here: https://bharatkosh.gov.in/faq"
+
+  utter_provide_contact:
+    - text: >-
+        You can contact the support team:
+        Phone: 011 24665534
+        Email: helpdesk - ntrp-helpdesk[at]gov[dot]in
 
 
 session_config:

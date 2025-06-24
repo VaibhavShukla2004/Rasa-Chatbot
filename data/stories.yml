@@ -3,50 +3,64 @@ version: "3.1"
 stories:
 - story: answer deposit channel query
   steps:
-  - intent: deposit_channels
-  - action: utter_deposit_channels
+    - intent: deposit_channels
+    - action: utter_deposit_channels
 
 - story: answer NEFT without channels query
   steps:
-  - intent: use_neft_without_channels
-  - action: utter_use_neft_without_channels
+    - intent: use_neft_without_channels
+    - action: utter_use_neft_without_channels
 
 - story: answer challan not generated query
   steps:
-  - intent: challan_not_generated
-  - action: utter_challan_not_generated
+    - intent: challan_not_generated
+    - action: utter_challan_not_generated
 
-- story: Respond to challan not printable
+- story: answer NEFT challan print issue
   steps:
-  - intent: print_challan_issue
-  - action: utter_print_challan_issue
+    - intent: neft_challan_issue
+    - action: utter_neft_challan_issue
 
-- story: Respond to procedure to generate challan
+- story: answer generate NEFT challan
   steps:
-  - intent: generate_challan_neft
-  - action: utter_generate_challan_neft
+    - intent: generate_neft_challan
+    - action: utter_generate_neft_challan
 
-- story: Respond to challan still not printable
+- story: answer UTR entered but no challan
   steps:
-  - intent: challan_still_not_printable
-  - action: utter_challan_still_not_printable
+    - intent: utr_entered_but_no_challan
+    - action: utter_utr_entered_but_no_challan
 
-- story: Respond to transaction not found for UTR update
+- story: answer no transaction for UTR
   steps:
-  - intent: transaction_not_found
-  - action: utter_transaction_not_found
+    - intent: no_transaction_for_utr
+    - action: utter_no_transaction_for_utr
 
-- story: Respond to incomplete NEFT payment
+- story: answer incomplete NEFT payment
   steps:
-  - intent: incomplete_neft_payment
-  - action: utter_incomplete_neft_payment
+    - intent: incomplete_neft_payment
+    - action: utter_incomplete_neft_payment
 
-- story: Respond to role of aggregator
+- story: answer aggregator role
   steps:
-  - intent: role_of_aggregator
-  - action: utter_role_of_aggregator
+    - intent: aggregator_role
+    - action: utter_aggregator_role
 
-- story: Respond to aggregator payment modes
+- story: answer aggregator payment modes
   steps:
-  - intent: aggregator_payment_modes
-  - action: utter_aggregator_payment_modes
+    - intent: aggregator_payment_modes
+    - action: utter_aggregator_payment_modes
+
+- story: user says not helpful once
+  steps:
+    - intent: not_helpful
+    - action: utter_provide_faq
+
+- story: user says not helpful twice
+  steps:
+    - intent: not_helpful
+    - action: utter_provide_faq
+    - intent: not_helpful
+    - action: utter_provide_contact
+
+

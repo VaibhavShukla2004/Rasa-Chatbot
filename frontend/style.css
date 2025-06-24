@@ -83,3 +83,12 @@ header {
 #chat-form button:hover {
   background-color: #003d99;
 }
+
+.message.bot a {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.message.bot strong {
+  color: #333;
+}

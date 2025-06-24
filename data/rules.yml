@@ -1,17 +1,57 @@
 version: "3.1"
 
 rules:
+- rule: say hi when greeted
+  steps:
+    - intent: greet
+    - action: utter_greet
+
 - rule: answer deposit channel query
   steps:
-  - intent: deposit_channels
-  - action: utter_deposit_channels
+    - intent: deposit_channels
+    - action: utter_deposit_channels
 
 - rule: answer NEFT without channels query
   steps:
-  - intent: use_neft_without_channels
-  - action: utter_use_neft_without_channels
+    - intent: use_neft_without_channels
+    - action: utter_use_neft_without_channels
 
 - rule: answer challan not generated query
   steps:
-  - intent: challan_not_generated
-  - action: utter_challan_not_generated
+    - intent: challan_not_generated
+    - action: utter_challan_not_generated
+
+- rule: answer NEFT challan print issue
+  steps:
+    - intent: neft_challan_issue
+    - action: utter_neft_challan_issue
+
+- rule: answer generate NEFT challan query
+  steps:
+    - intent: generate_neft_challan
+    - action: utter_generate_neft_challan
+
+- rule: answer UTR entered but no challan query
+  steps:
+    - intent: utr_entered_but_no_challan
+    - action: utter_utr_entered_but_no_challan
+
+- rule: answer no transaction for UTR query
+  steps:
+    - intent: no_transaction_for_utr
+    - action: utter_no_transaction_for_utr
+
+- rule: answer incomplete NEFT payment query
+  steps:
+    - intent: incomplete_neft_payment
+    - action: utter_incomplete_neft_payment
+
+- rule: answer aggregator role query
+  steps:
+    - intent: aggregator_role
+    - action: utter_aggregator_role
+
+- rule: answer aggregator payment modes query
+  steps:
+    - intent: aggregator_payment_modes
+    - action: utter_aggregator_payment_modes
