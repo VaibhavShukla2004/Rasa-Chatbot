@@ -21,7 +21,17 @@ chatForm.addEventListener("submit", async (e) => {
 function appendMessage(sender, message) {
   const msgDiv = document.createElement("div");
   msgDiv.classList.add("message", sender === "user" ? "user" : "bot");
-  msgDiv.innerText = message;
+
+  const avatar = document.createElement("div");
+  avatar.classList.add("avatar");
+  avatar.innerText = sender === "user" ? "U" : "B";
+
+  const bubble = document.createElement("div");
+  bubble.classList.add("bubble");
+  bubble.innerText = message;
+
+  msgDiv.appendChild(avatar);
+  msgDiv.appendChild(bubble);
   chatBox.appendChild(msgDiv);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
@@ -88,14 +98,25 @@ function appendFormattedMessage(text) {
   const msgDiv = document.createElement("div");
   msgDiv.classList.add("message", "bot");
 
+  const avatar = document.createElement("div");
+  avatar.classList.add("avatar");
+  avatar.innerText = "B";
+
+  const bubble = document.createElement("div");
+  bubble.classList.add("bubble");
+
   if (text.includes("http")) {
-    msgDiv.innerHTML = `Here’s the <a href="https://bharatkosh.gov.in/faq" target="_blank">FAQ page</a> — hope that helps!`;
+    bubble.innerHTML = `Here’s the <a href="https://bharatkosh.gov.in/faq" target="_blank">FAQ page</a> — hope that helps!`;
   } else {
-    msgDiv.innerHTML = `<strong>Contact Support:</strong><br>
+    bubble.innerHTML = `
+      <strong>Contact Support:</strong><br><br>
       📞 <b>011 24665534</b><br>
-      📧 <b>ntrp-helpdesk[at]gov[dot]in</b>`;
+      📧 <b>ntrp-helpdesk[at]gov[dot]in</b>
+    `;
   }
 
+  msgDiv.appendChild(avatar);
+  msgDiv.appendChild(bubble);
   chatBox.appendChild(msgDiv);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
@@ -143,3 +164,10 @@ function showContinueButtons() {
   chatBox.appendChild(btnContainer);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
+
+// Theme toggle
+document.getElementById("theme-toggle").addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  const btn = document.getElementById("theme-toggle");
+  btn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+});
