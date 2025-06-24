@@ -14,6 +14,8 @@ intents:
   - aggregator_role
   - aggregator_payment_modes
   - not_helpful
+  - end_conversation
+  - thank_you
 
 responses:
 
@@ -72,6 +74,16 @@ responses:
         Phone: 011 24665534
         Email: helpdesk - ntrp-helpdesk[at]gov[dot]in
 
+  utter_end_conversation:
+    - text: "The conversation ended successfully."
+
+  utter_thank_you:
+    - text: "You're welcome! Would you like to continue or end the conversation?"
+      buttons:
+        - title: "Continue"
+          payload: /greet
+        - title: "End"
+          payload: /end_conversation
 
 session_config:
   session_expiration_time: 60

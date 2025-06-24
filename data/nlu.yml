@@ -3,9 +3,19 @@ version: "3.1"
 nlu:
 - intent: greet
   examples: |
-    - Hello
-    - Hi
-    - Wassup
+    - hi
+    - hey
+    - hello
+    - good morning
+    - good afternoon
+    - good evening
+    - greetings
+    - hey there
+    - what's up
+    - wassup
+    - sup
+    - I need help
+
 
 - intent: deposit_channels
   examples: |
@@ -86,4 +96,33 @@ nlu:
     - not helpful
     - nothing works
 
+- intent: end_conversation
+  examples: |
+    - stop
+    - end
+    - done
+    - I'm done
+    - no more questions
+    - we're done here
+    - that's all
+    - over
+    - finish
+    - this is the end
+    - close this
 
+
+- intent: thank_you
+  examples: |
+    - thanks
+    - thank you
+    - appreciate it
+    - many thanks
+    - thank you very much
+    - thx
+    - ty
+    - thank you so much
+    - thank you for your help
+    - I really appreciate it
+    - thanks a lot
+    - thank you, goodbye
+    - thank you, that's helpful
