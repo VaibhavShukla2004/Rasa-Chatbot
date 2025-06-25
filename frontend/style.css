@@ -1,208 +1,214 @@
 :root {
-  --bg: #f0f2f5;
-  --primary: #2979ff;
-  --bot-msg: #eeeeee;
-  --user-msg: #d0e6ff;
-  --text: #333;
-  --border: #ccc;
-  --input-bg: #f1f1f1;
-}
-
-body.dark {
-  --bg: #121212;
-  --primary: #64b5f6;
-  --bot-msg: #2a2a2a;
-  --user-msg: #1e3a5f;
-  --text: #eee;
-  --border: #333;
-  --input-bg: #1f1f1f;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', sans-serif;
+  --primary: #007bff;
+  --bg: #f9f9f9;
+  --text: #222;
+  --bot-msg: #e6e6e6;
+  --user-msg: #d1e7ff;
+  --dark-bg: #1e1e1e;
+  --dark-text: #f1f1f1;
+  --dark-bot-msg: #333;
+  --dark-user-msg: #005a9e;
 }
 
 body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
   background: var(--bg);
   color: var(--text);
-  height: 100vh;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Floating Chat Icon */
+#chat-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 50%;
+  width: 58px;
+  height: 58px;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 26px;
+  cursor: pointer;
+  z-index: 1000;
 }
 
+/* Chat Window */
 .chat-wrapper {
-  width: 100%;
-  max-width: 450px;
-  border-radius: 12px;
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 320px;
+  max-height: 500px;
+  background: var(--bg);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  background-color: var(--bg);
   display: flex;
   flex-direction: column;
+  z-index: 999;
+  transform: scale(1);
+  transition: transform 0.3s ease;
 }
 
-header {
+.chat-wrapper.hidden {
+  transform: scale(0);
+  transform-origin: bottom right;
+}
+
+/* Header */
+.chat-header {
   background: var(--primary);
   color: white;
+  padding: 10px 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 16px;
 }
 
-header h1 {
-  font-size: 18px;
+.chat-header h1 {
+  font-size: 16px;
+  margin: 0;
 }
 
-#theme-toggle {
-  font-size: 20px;
+/* Header Buttons */
+.header-buttons button {
   background: transparent;
   border: none;
-  cursor: pointer;
   color: white;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-/* Chat container */
+/* Chat container (messages + input) */
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 600px;
+  height: 400px;
+  padding: 10px;
 }
 
+/* Chat box */
 .chat-box {
   flex: 1;
-  padding: 16px;
   overflow-y: auto;
+  max-height: 300px;
+  padding-right: 5px;
+  scroll-behavior: smooth;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  background-color: var(--bg);
 }
 
+/* Messages */
 .message {
   display: flex;
-  align-items: flex-end;
-  max-width: 90%;
-  gap: 10px;
-}
-
-
-
-.message .bubble {
-  padding: 10px 14px;
-  border-radius: 16px;
-  line-height: 1.5;
-  background: var(--bot-msg);
-  color: var(--text);
-  word-wrap: break-word;
+  align-items: flex-start;
+  margin-bottom: 10px;
 }
 
 .message.user {
   flex-direction: row-reverse;
-  align-self: flex-end;
+}
+
+.message .bubble {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text); /* Fix for dark mode */
 }
 
 .message.user .bubble {
   background: var(--user-msg);
+  border-bottom-right-radius: 0;
 }
 
+.message.bot .bubble {
+  background: var(--bot-msg);
+  border-bottom-left-radius: 0;
+}
+
+/* Avatars */
 .avatar {
   width: 32px;
   height: 32px;
-  min-width: 32px;
-  min-height: 32px;
   border-radius: 50%;
-  background: var(--primary);
+  background: #ccc;
   display: flex;
-  align-items: center;
   justify-content: center;
-  color: white;
+  align-items: center;
+  font-size: 12px;
   font-weight: bold;
-  font-size: 14px;
+  color: white;
   flex-shrink: 0;
+  border: 1px solid black;
+  margin: 0 8px; /* Add spacing between icons and bubbles */
 }
 
-
-/* Input bar */
+/* Input Form */
 .chat-form {
   display: flex;
-  border-top: 1px solid var(--border);
-  padding: 10px;
-  background-color: var(--bg);
+  border-top: 1px solid #ccc;
+  margin-top: 10px; /* spacing above */
+  height: 48px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .chat-form input {
   flex: 1;
-  border: none;
-  padding: 12px 14px;
-  font-size: 15px;
-  border-radius: 20px;
-  background: var(--input-bg);
-  outline: none;
-  margin-right: 10px;
-  color: var(--text);
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  height: 100%;
+  box-sizing: border-box;
+  font-family: 'Times New Roman', serif;
 }
 
 .chat-form button {
-  background-color: var(--primary);
+  padding: 0 16px;
+  font-size: 18px;
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
-  font-size: 20px;
+  border-left: 1px solid #ccc;
+  height: 100%;
   cursor: pointer;
 }
 
-/* Typing indicator */
-.typing-dots {
-  display: inline-block;
+/* Dark mode styles */
+.chat-wrapper.dark {
+  --bg: var(--dark-bg);
+  --text: var(--dark-text);
+  --bot-msg: var(--dark-bot-msg);
+  --user-msg: var(--dark-user-msg);
 }
 
-.typing-dots span {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  margin: 0 1px;
-  background: #888;
-  border-radius: 50%;
-  animation: blink 1.2s infinite ease-in-out both;
+/* Support Info Styling */
+.contact-info {
+  line-height: 1.6;
+  font-size: 14px;
 }
 
-.typing-dots span:nth-child(2) {
-  animation-delay: 0.2s;
-}
-.typing-dots span:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes blink {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1); }
-}
-
-/* Continue/End buttons */
+/* Continue buttons centering */
 .button-container {
   display: flex;
+  justify-content: center;
   gap: 10px;
-  margin-top: -5px;
-  align-self: flex-start;
+  margin: 10px 0;
 }
 
 .button-container .btn {
-  padding: 8px 16px;
-  border-radius: 20px;
+  padding: 6px 14px;
   border: none;
+  border-radius: 6px;
   background-color: var(--primary);
   color: white;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.button-container .btn:hover {
-  background-color: #1565c0;
 }

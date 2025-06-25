@@ -1,6 +1,9 @@
 const chatForm = document.getElementById("chat-form");
 const userInput = document.getElementById("user-input");
 const chatBox = document.getElementById("chat-box");
+const chatWrapper = document.getElementById("chat-wrapper");
+const chatIcon = document.getElementById("chat-icon");
+const chatClose = document.getElementById("chat-close");
 
 const RASA_URL = "http://127.0.0.1:5005/webhooks/rest/webhook";
 
@@ -24,7 +27,16 @@ function appendMessage(sender, message) {
 
   const avatar = document.createElement("div");
   avatar.classList.add("avatar");
-  avatar.innerText = sender === "user" ? "U" : "B";
+  if (sender === "bot") {
+    avatar.innerText = "BOT";
+    avatar.style.background = "#007bff";
+    avatar.style.color = "white";
+    avatar.style.fontWeight = "bold";
+  } else {
+    avatar.innerText = "";
+    avatar.style.background = "#ccc";
+    avatar.style.border = "1px solid #aaa";
+  }
 
   const bubble = document.createElement("div");
   bubble.classList.add("bubble");
@@ -41,9 +53,10 @@ function showTypingIndicator() {
   const typingDiv = document.createElement("div");
   typingDiv.classList.add("message", "bot");
   typingDiv.id = "typing-indicator";
-  typingDiv.innerHTML = `<span class="typing-dots">
-    <span>.</span><span>.</span><span>.</span>
-  </span>`;
+  typingDiv.innerHTML = `
+    <div class="avatar">BOT</div>
+    <div class="bubble"><span class="typing-dots"><span>.</span><span>.</span><span>.</span></span></div>
+  `;
   chatBox.appendChild(typingDiv);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
@@ -59,10 +72,8 @@ async function sendMessageToBot(message) {
   try {
     const response = await fetch(RASA_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ sender: "user", message: message })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sender: "user", message })
     });
 
     removeTypingIndicator();
@@ -94,13 +105,17 @@ async function sendMessageToBot(message) {
   }
 }
 
+// Add formatted contact/helpdesk message
 function appendFormattedMessage(text) {
   const msgDiv = document.createElement("div");
   msgDiv.classList.add("message", "bot");
 
   const avatar = document.createElement("div");
   avatar.classList.add("avatar");
-  avatar.innerText = "B";
+  avatar.innerText = "BOT";
+  avatar.style.background = "#007bff";
+  avatar.style.color = "white";
+  avatar.style.fontWeight = "bold";
 
   const bubble = document.createElement("div");
   bubble.classList.add("bubble");
@@ -109,10 +124,11 @@ function appendFormattedMessage(text) {
     bubble.innerHTML = `Here’s the <a href="https://bharatkosh.gov.in/faq" target="_blank">FAQ page</a> — hope that helps!`;
   } else {
     bubble.innerHTML = `
-      <strong>Contact Support:</strong><br><br>
-      📞 <b>011 24665534</b><br>
-      📧 <b>ntrp-helpdesk[at]gov[dot]in</b>
-    `;
+      <div class="contact-info">
+        <strong>Contact Support:</strong><br />
+        📞 <b>011 24665534</b><br />
+        📧 <b>ntrp-helpdesk[at]gov[dot]in</b>
+      </div>`;
   }
 
   msgDiv.appendChild(avatar);
@@ -121,18 +137,21 @@ function appendFormattedMessage(text) {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
+// Disable input bar after end
 function disableInputBar() {
   userInput.disabled = true;
   userInput.placeholder = "Conversation ended";
-  document.querySelector("button[type='submit']").disabled = true;
+  chatForm.querySelector("button").disabled = true;
 }
 
+// Re-enable input bar if needed
 function enableInputBar() {
   userInput.disabled = false;
   userInput.placeholder = "Type your message...";
-  document.querySelector("button[type='submit']").disabled = false;
+  chatForm.querySelector("button").disabled = false;
 }
 
+// Add Yes/No buttons
 function showContinueButtons() {
   const btnContainer = document.createElement("div");
   btnContainer.classList.add("button-container");
@@ -142,7 +161,7 @@ function showContinueButtons() {
   yesBtn.classList.add("btn");
   yesBtn.onclick = () => {
     appendMessage("user", "yes");
-    enableInputBar();  
+    enableInputBar();
     showTypingIndicator();
     sendMessageToBot("yes");
     btnContainer.remove();
@@ -155,7 +174,7 @@ function showContinueButtons() {
     appendMessage("user", "no");
     showTypingIndicator();
     sendMessageToBot("done");
-    disableInputBar();  // ✅ close input
+    disableInputBar();
     btnContainer.remove();
   };
 
@@ -165,9 +184,21 @@ function showContinueButtons() {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Theme toggle
+// Toggle dark mode
 document.getElementById("theme-toggle").addEventListener("click", () => {
-  document.body.classList.toggle("dark");
+  chatWrapper.classList.toggle("dark");
   const btn = document.getElementById("theme-toggle");
   btn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
 });
+
+// Open/close toggle
+chatIcon.onclick = () => {
+  const isOpen = !chatWrapper.classList.contains("hidden");
+  chatWrapper.classList.toggle("hidden");
+  chatIcon.classList.toggle("hidden", isOpen);
+};
+
+chatClose.onclick = () => {
+  chatWrapper.classList.add("hidden");
+  chatIcon.classList.remove("hidden");
+};

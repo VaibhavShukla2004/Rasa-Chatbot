@@ -6,10 +6,17 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="chat-wrapper">
-    <header>
+  <!-- Floating Chatbot Icon -->
+  <div id="chat-icon" title="Chat with us">💬</div>
+
+  <!-- Chat Window -->
+  <div class="chat-wrapper hidden" id="chat-wrapper">
+    <header class="chat-header">
       <h1>Bharatkosh Chatbot</h1>
-      <button id="theme-toggle" title="Toggle dark mode">🌙</button>
+      <div class="header-buttons">
+        <button id="theme-toggle" title="Toggle dark mode">🌙</button>
+        <button id="chat-close" title="Close chat">❌</button>
+      </div>
     </header>
 
     <div class="chat-container">
