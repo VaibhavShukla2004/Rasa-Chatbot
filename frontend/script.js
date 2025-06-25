@@ -7,7 +7,6 @@ const chatClose = document.getElementById("chat-close");
 
 const RASA_URL = "http://127.0.0.1:5005/webhooks/rest/webhook";
 
-// Handle form submit
 chatForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const message = userInput.value.trim();
@@ -20,54 +19,37 @@ chatForm.addEventListener("submit", async (e) => {
   await sendMessageToBot(message);
 });
 
-// Add message to UI
 function appendMessage(sender, message) {
   const msgDiv = document.createElement("div");
   msgDiv.classList.add("message", sender === "user" ? "user" : "bot");
-
-  const avatar = document.createElement("div");
-  avatar.classList.add("avatar");
-  if (sender === "bot") {
-    avatar.innerText = "BOT";
-    avatar.style.background = "#007bff";
-    avatar.style.color = "white";
-    avatar.style.fontWeight = "bold";
-  } else {
-    avatar.innerText = "";
-    avatar.style.background = "#ccc";
-    avatar.style.border = "1px solid #aaa";
-  }
 
   const bubble = document.createElement("div");
   bubble.classList.add("bubble");
   bubble.innerText = message;
 
-  msgDiv.appendChild(avatar);
   msgDiv.appendChild(bubble);
   chatBox.appendChild(msgDiv);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Show typing animation
 function showTypingIndicator() {
   const typingDiv = document.createElement("div");
   typingDiv.classList.add("message", "bot");
   typingDiv.id = "typing-indicator";
+
   typingDiv.innerHTML = `
-    <div class="avatar">BOT</div>
     <div class="bubble"><span class="typing-dots"><span>.</span><span>.</span><span>.</span></span></div>
   `;
+
   chatBox.appendChild(typingDiv);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Remove typing animation
 function removeTypingIndicator() {
   const typing = document.getElementById("typing-indicator");
   if (typing) typing.remove();
 }
 
-// Send message to Rasa server
 async function sendMessageToBot(message) {
   try {
     const response = await fetch(RASA_URL, {
@@ -94,6 +76,7 @@ async function sendMessageToBot(message) {
             disableInputBar();
           } else {
             appendMessage("bot", entry.text);
+            showHelpfulButtons();
           }
         }
       });
@@ -105,17 +88,9 @@ async function sendMessageToBot(message) {
   }
 }
 
-// Add formatted contact/helpdesk message
 function appendFormattedMessage(text) {
   const msgDiv = document.createElement("div");
   msgDiv.classList.add("message", "bot");
-
-  const avatar = document.createElement("div");
-  avatar.classList.add("avatar");
-  avatar.innerText = "BOT";
-  avatar.style.background = "#007bff";
-  avatar.style.color = "white";
-  avatar.style.fontWeight = "bold";
 
   const bubble = document.createElement("div");
   bubble.classList.add("bubble");
@@ -124,34 +99,32 @@ function appendFormattedMessage(text) {
     bubble.innerHTML = `Here’s the <a href="https://bharatkosh.gov.in/faq" target="_blank">FAQ page</a> — hope that helps!`;
   } else {
     bubble.innerHTML = `
-      <div class="contact-info">
-        <strong>Contact Support:</strong><br />
-        📞 <b>011 24665534</b><br />
-        📧 <b>ntrp-helpdesk[at]gov[dot]in</b>
-      </div>`;
+  <div class="contact-info">
+    <p><strong>Contact Support:</strong></p>
+    <p>📞 <a href="tel:01124665534">011 24665534</a></p>
+    <p>📧 <a href="mailto:ntrp-helpdesk@gov.in">ntrp-helpdesk@gov.in</a></p>
+  </div>
+`;
+
   }
 
-  msgDiv.appendChild(avatar);
   msgDiv.appendChild(bubble);
   chatBox.appendChild(msgDiv);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Disable input bar after end
 function disableInputBar() {
   userInput.disabled = true;
   userInput.placeholder = "Conversation ended";
   chatForm.querySelector("button").disabled = true;
 }
 
-// Re-enable input bar if needed
 function enableInputBar() {
   userInput.disabled = false;
   userInput.placeholder = "Type your message...";
   chatForm.querySelector("button").disabled = false;
 }
 
-// Add Yes/No buttons
 function showContinueButtons() {
   const btnContainer = document.createElement("div");
   btnContainer.classList.add("button-container");
@@ -184,14 +157,46 @@ function showContinueButtons() {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Toggle dark mode
+function showHelpfulButtons() {
+  const btnContainer = document.createElement("div");
+  btnContainer.classList.add("button-container");
+
+  const helpfulBtn = document.createElement("button");
+  helpfulBtn.innerText = "Helpful";
+  helpfulBtn.classList.add("btn");
+  helpfulBtn.onclick = () => {
+    appendMessage("user", "That was helpful");
+    btnContainer.remove();
+    appendFollowUpOptions();
+  };
+
+  const notHelpfulBtn = document.createElement("button");
+  notHelpfulBtn.innerText = "Not Helpful";
+  notHelpfulBtn.classList.add("btn");
+  notHelpfulBtn.onclick = () => {
+    appendMessage("user", "That was not helpful");
+    btnContainer.remove();
+    appendFormattedMessage("show contact");
+    appendFollowUpOptions();
+  };
+
+  btnContainer.appendChild(helpfulBtn);
+  btnContainer.appendChild(notHelpfulBtn);
+  chatBox.appendChild(btnContainer);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function appendFollowUpOptions() {
+  appendMessage("bot", "Would you like to continue the conversation?");
+  showContinueButtons();
+}
+
 document.getElementById("theme-toggle").addEventListener("click", () => {
   chatWrapper.classList.toggle("dark");
   const btn = document.getElementById("theme-toggle");
   btn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
 });
 
-// Open/close toggle
 chatIcon.onclick = () => {
   const isOpen = !chatWrapper.classList.contains("hidden");
   chatWrapper.classList.toggle("hidden");
