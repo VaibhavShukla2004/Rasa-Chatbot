@@ -1,0 +1,13 @@
+version: "3.1"
+nlu:
+- intent: faq_challan
+  examples: |
+    - What is a challan on Bharatkosh?
+    - How do I generate a challan on Bharatkosh?
+    - What details are required to generate a challan?
+    - What is a GAR-7 challan?
+    - Can I cancel a challan once it is generated?
+    - How long is a challan valid?
+    - Can I use the same challan for multiple payments?
+    - Can I generate a challan for penalty payments?
+    - What if I enter incorrect challan details?

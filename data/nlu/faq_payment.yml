@@ -1,0 +1,10 @@
+version: "3.1"
+nlu:
+- intent: faq_payment
+  examples: |
+    - How do I pay a challan online?
+    - Is there an option to pay a challan offline?
+    - How do I verify my UTR number on Bharatkosh?
+    - What are the common reasons for payment failures?
+    - Can I schedule a payment using a challan?
+    - What is the max amount I can pay through Bharatkosh?

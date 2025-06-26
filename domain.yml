@@ -1,13 +1,44 @@
 version: "3.1"
-
 intents:
   - greet
   - helpful
   - not_helpful
+  - faq_bharatkosh_overview
+  - faq_challan
+  - faq_payment
+  - faq_tracking
+  - faq_help_support
+  - faq_registered_users
+  - faq_pfms
+  - faq_current_receipts
 
 responses:
   utter_greet:
     - text: "Hello! I'm your assistant. Ask me anything."
+
+  utter_faq_bharatkosh_overview:
+    - text: "Bharatkosh is a non-tax receipt portal managed by CGA to facilitate online payments."
+
+  utter_faq_challan:
+    - text: "To generate a challan, log in and follow the instructions on the portal."
+
+  utter_faq_payment:
+    - text: "You can pay via UPI, NEFT, credit/debit cards, or net banking."
+
+  utter_faq_tracking:
+    - text: "Go to 'Track Your Payment' on the portal and enter your transaction details."
+
+  utter_faq_help_support:
+    - text: "Please contact the Bharatkosh helpdesk at ntrp-helpdesk@gov.in."
+
+  utter_faq_registered_users:
+    - text: "Registered users can log in with their email and password to access services."
+
+  utter_faq_pfms:
+    - text: "PFMS supports DBT and real-time tracking of government financial flows."
+
+  utter_faq_current_receipts:
+    - text: "Access current receipts via the dashboard and make deposits accordingly."
 
 actions:
   - action_handle_helpful

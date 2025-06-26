@@ -1,5 +1,4 @@
 version: "3.1"
-
 rules:
 - rule: respond to greeting
   steps:
@@ -15,3 +14,43 @@ rules:
   steps:
     - intent: not_helpful
     - action: action_handle_not_helpful
+
+- rule: answer bharatkosh overview
+  steps:
+    - intent: faq_bharatkosh_overview
+    - action: utter_faq_bharatkosh_overview
+
+- rule: answer challan questions
+  steps:
+    - intent: faq_challan
+    - action: utter_faq_challan
+
+- rule: answer payment questions
+  steps:
+    - intent: faq_payment
+    - action: utter_faq_payment
+
+- rule: answer tracking questions
+  steps:
+    - intent: faq_tracking
+    - action: utter_faq_tracking
+
+- rule: answer help support
+  steps:
+    - intent: faq_help_support
+    - action: utter_faq_help_support
+
+- rule: answer registered user questions
+  steps:
+    - intent: faq_registered_users
+    - action: utter_faq_registered_users
+
+- rule: answer pfms questions
+  steps:
+    - intent: faq_pfms
+    - action: utter_faq_pfms
+
+- rule: answer current receipts
+  steps:
+    - intent: faq_current_receipts
+    - action: utter_faq_current_receipts

@@ -1,0 +1,8 @@
+version: "3.1"
+nlu:
+- intent: faq_current_receipts
+  examples: |
+    - How do I access current receipts available for deposits?
+    - What are the types of receipts on Bharatkosh?
+    - How do I deposit funds using a current receipt?
+    - What is the process for paying RTI fees?

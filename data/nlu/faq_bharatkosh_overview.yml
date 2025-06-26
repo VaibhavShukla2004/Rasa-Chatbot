@@ -1,0 +1,9 @@
+version: "3.1"
+nlu:
+- intent: faq_bharatkosh_overview
+  examples: |
+    - What is Bharatkosh and what is its purpose?
+    - What is the purpose of Bharatkosh?
+    - Can you explain what Bharatkosh does?
+    - Why was Bharatkosh created?
+    - What's the use of Bharatkosh?

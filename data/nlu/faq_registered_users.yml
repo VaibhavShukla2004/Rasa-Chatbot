@@ -1,0 +1,10 @@
+version: "3.1"
+nlu:
+- intent: faq_registered_users
+  examples: |
+    - How do I log in to Bharatkosh?
+    - Can I change my login credentials?
+    - What if I forget my login details?
+    - How do I link my bank account?
+    - Can I view historical transaction data?
+    - Can I delete my Bharatkosh account?
