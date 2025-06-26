@@ -183,22 +183,6 @@ body {
   font-size: 14px;
 }
 
-.button-container {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 10px 0;
-}
-
-.button-container .btn {
-  padding: 6px 14px;
-  border: none;
-  border-radius: 6px;
-  background-color: var(--primary);
-  color: white;
-  cursor: pointer;
-}
-
 .contact-info {
   line-height: 1.6;
   font-size: 14px;
@@ -210,4 +194,21 @@ body {
   margin-top: 0;
 }
 
+/* End button styling */
+#end-button {
+  margin: 8px 12px 12px;
+  padding: 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
 
+/* Extra space below chat-box to avoid button collision */
+.chat-box::after {
+  content: "";
+  display: block;
+  height: 48px;
+}

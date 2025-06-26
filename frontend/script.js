@@ -4,8 +4,106 @@ const chatBox = document.getElementById("chat-box");
 const chatWrapper = document.getElementById("chat-wrapper");
 const chatIcon = document.getElementById("chat-icon");
 const chatClose = document.getElementById("chat-close");
+const themeToggle = document.getElementById("theme-toggle");
 
 const RASA_URL = "http://127.0.0.1:5005/webhooks/rest/webhook";
+
+let conversationEnded = false;
+
+// 🟥 END/CONTINUE CONVO button
+const endButton = document.createElement("button");
+endButton.textContent = "End Conversation";
+endButton.id = "end-button";
+endButton.classList.add("end-btn");
+chatWrapper.querySelector(".chat-container").appendChild(endButton);
+
+endButton.addEventListener("click", () => {
+  conversationEnded = !conversationEnded;
+
+  if (conversationEnded) {
+    userInput.disabled = true;
+    chatForm.querySelector("button").disabled = true;
+    userInput.placeholder = "Conversation ended";
+    endButton.textContent = "Continue Conversation";
+    endButton.style.backgroundColor = "#007bff";
+  } else {
+    userInput.disabled = false;
+    chatForm.querySelector("button").disabled = false;
+    userInput.placeholder = "Ask me anything...";
+    endButton.textContent = "End Conversation";
+    endButton.style.backgroundColor = "#dc3545";
+  }
+});
+
+// 🟣 Helpful / Not Helpful persistent buttons
+const feedbackContainer = document.createElement("div");
+feedbackContainer.style.display = "flex";
+feedbackContainer.style.justifyContent = "center";
+feedbackContainer.style.gap = "10px";
+feedbackContainer.style.margin = "0 12px 12px";
+
+const helpfulBtn = document.createElement("button");
+helpfulBtn.innerText = "Helpful";
+helpfulBtn.style.backgroundColor = "#6f42c1";
+helpfulBtn.style.color = "white";
+helpfulBtn.style.border = "none";
+helpfulBtn.style.borderRadius = "10px";
+helpfulBtn.style.padding = "8px 12px";
+helpfulBtn.style.cursor = "pointer";
+
+const notHelpfulBtn = document.createElement("button");
+notHelpfulBtn.innerText = "Not Helpful";
+notHelpfulBtn.style.backgroundColor = "#6f42c1";
+notHelpfulBtn.style.color = "white";
+notHelpfulBtn.style.border = "none";
+notHelpfulBtn.style.borderRadius = "10px";
+notHelpfulBtn.style.padding = "8px 12px";
+notHelpfulBtn.style.cursor = "pointer";
+
+helpfulBtn.onclick = () => {
+  if (!conversationEnded) {
+    appendMessage("user", "helpful");
+    showTypingIndicator();
+    sendMessageToBot("helpful");
+  }
+};
+
+notHelpfulBtn.onclick = () => {
+  if (!conversationEnded) {
+    appendMessage("user", "not helpful");
+    showTypingIndicator();
+    sendMessageToBot("not helpful");
+  }
+};
+
+feedbackContainer.appendChild(helpfulBtn);
+feedbackContainer.appendChild(notHelpfulBtn);
+chatWrapper.querySelector(".chat-container").appendChild(feedbackContainer);
+
+// 🗑️ Trash button
+const trashBtn = document.createElement("button");
+trashBtn.id = "trash-btn";
+trashBtn.innerText = "🗑️";
+trashBtn.title = "Clear chat";
+trashBtn.style.border = "none";
+trashBtn.style.background = "transparent";
+trashBtn.style.cursor = "pointer";
+trashBtn.style.fontSize = "16px";
+trashBtn.style.marginRight = "8px";
+themeToggle.parentNode.insertBefore(trashBtn, themeToggle);
+
+trashBtn.onclick = () => {
+  chatBox.innerHTML = "";
+  userInput.value = "";
+  if (conversationEnded) {
+    userInput.disabled = false;
+    chatForm.querySelector("button").disabled = false;
+    userInput.placeholder = "Ask me anything...";
+    endButton.textContent = "End Conversation";
+    endButton.style.backgroundColor = "#dc3545";
+    conversationEnded = false;
+  }
+};
 
 chatForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -54,8 +152,13 @@ async function sendMessageToBot(message) {
   try {
     const response = await fetch(RASA_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sender: "user", message })
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        sender: "user",
+        message
+      })
     });
 
     removeTypingIndicator();
@@ -68,16 +171,18 @@ async function sendMessageToBot(message) {
         if (entry.text) {
           if (entry.text.includes("helpdesk") || entry.text.includes("http")) {
             appendFormattedMessage(entry.text);
-          } else if (entry.text.toLowerCase().includes("would you like to continue")) {
-            appendMessage("bot", entry.text);
-            showContinueButtons();
-          } else if (entry.text.includes("conversation ended")) {
-            appendMessage("bot", entry.text);
-            disableInputBar();
           } else {
             appendMessage("bot", entry.text);
-            showHelpfulButtons();
           }
+        }
+
+        if (entry.hasOwnProperty("custom") && entry.custom.end_chat === true) {
+          userInput.disabled = true;
+          chatForm.querySelector("button").disabled = true;
+          userInput.placeholder = "Conversation ended";
+          endButton.textContent = "Continue Conversation";
+          endButton.style.backgroundColor = "#007bff";
+          conversationEnded = true;
         }
       });
     }
@@ -99,13 +204,12 @@ function appendFormattedMessage(text) {
     bubble.innerHTML = `Here’s the <a href="https://bharatkosh.gov.in/faq" target="_blank">FAQ page</a> — hope that helps!`;
   } else {
     bubble.innerHTML = `
-  <div class="contact-info">
-    <p><strong>Contact Support:</strong></p>
-    <p>📞 <a href="tel:01124665534">011 24665534</a></p>
-    <p>📧 <a href="mailto:ntrp-helpdesk@gov.in">ntrp-helpdesk@gov.in</a></p>
-  </div>
-`;
-
+      <div class="contact-info">
+        <p><strong>Contact Support:</strong></p>
+        <p>📞 <a href="tel:01124665534">011 24665534</a></p>
+        <p>📧 <a href="mailto:ntrp-helpdesk@gov.in">ntrp-helpdesk@gov.in</a></p>
+      </div>
+    `;
   }
 
   msgDiv.appendChild(bubble);
@@ -113,90 +217,13 @@ function appendFormattedMessage(text) {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function disableInputBar() {
-  userInput.disabled = true;
-  userInput.placeholder = "Conversation ended";
-  chatForm.querySelector("button").disabled = true;
-}
-
-function enableInputBar() {
-  userInput.disabled = false;
-  userInput.placeholder = "Type your message...";
-  chatForm.querySelector("button").disabled = false;
-}
-
-function showContinueButtons() {
-  const btnContainer = document.createElement("div");
-  btnContainer.classList.add("button-container");
-
-  const yesBtn = document.createElement("button");
-  yesBtn.innerText = "Yes";
-  yesBtn.classList.add("btn");
-  yesBtn.onclick = () => {
-    appendMessage("user", "yes");
-    enableInputBar();
-    showTypingIndicator();
-    sendMessageToBot("yes");
-    btnContainer.remove();
-  };
-
-  const noBtn = document.createElement("button");
-  noBtn.innerText = "No, End Chat";
-  noBtn.classList.add("btn");
-  noBtn.onclick = () => {
-    appendMessage("user", "no");
-    showTypingIndicator();
-    sendMessageToBot("done");
-    disableInputBar();
-    btnContainer.remove();
-  };
-
-  btnContainer.appendChild(yesBtn);
-  btnContainer.appendChild(noBtn);
-  chatBox.appendChild(btnContainer);
-  chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-function showHelpfulButtons() {
-  const btnContainer = document.createElement("div");
-  btnContainer.classList.add("button-container");
-
-  const helpfulBtn = document.createElement("button");
-  helpfulBtn.innerText = "Helpful";
-  helpfulBtn.classList.add("btn");
-  helpfulBtn.onclick = () => {
-    appendMessage("user", "That was helpful");
-    btnContainer.remove();
-    appendFollowUpOptions();
-  };
-
-  const notHelpfulBtn = document.createElement("button");
-  notHelpfulBtn.innerText = "Not Helpful";
-  notHelpfulBtn.classList.add("btn");
-  notHelpfulBtn.onclick = () => {
-    appendMessage("user", "That was not helpful");
-    btnContainer.remove();
-    appendFormattedMessage("show contact");
-    appendFollowUpOptions();
-  };
-
-  btnContainer.appendChild(helpfulBtn);
-  btnContainer.appendChild(notHelpfulBtn);
-  chatBox.appendChild(btnContainer);
-  chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-function appendFollowUpOptions() {
-  appendMessage("bot", "Would you like to continue the conversation?");
-  showContinueButtons();
-}
-
-document.getElementById("theme-toggle").addEventListener("click", () => {
+// Toggle dark mode
+themeToggle.addEventListener("click", () => {
   chatWrapper.classList.toggle("dark");
-  const btn = document.getElementById("theme-toggle");
-  btn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+  themeToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
 });
 
+// Toggle chat window
 chatIcon.onclick = () => {
   const isOpen = !chatWrapper.classList.contains("hidden");
   chatWrapper.classList.toggle("hidden");

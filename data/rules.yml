@@ -1,67 +1,17 @@
 version: "3.1"
 
 rules:
-- rule: respond to greet
+- rule: respond to greeting
   steps:
     - intent: greet
     - action: utter_greet
 
-- rule: respond to deposit query
+- rule: handle helpful
   steps:
-    - intent: deposit_channels
-    - action: utter_deposit_channels
+    - intent: helpful
+    - action: action_handle_helpful
 
-- rule: respond to NEFT without channels
+- rule: handle not helpful
   steps:
-    - intent: use_neft_without_channels
-    - action: utter_use_neft_without_channels
-
-- rule: respond to challan not generated
-  steps:
-    - intent: challan_not_generated
-    - action: utter_challan_not_generated
-
-- rule: respond to NEFT challan issue
-  steps:
-    - intent: neft_challan_issue
-    - action: utter_neft_challan_issue
-
-- rule: respond to generate NEFT challan
-  steps:
-    - intent: generate_neft_challan
-    - action: utter_generate_neft_challan
-
-- rule: respond to UTR entered but no challan
-  steps:
-    - intent: utr_entered_but_no_challan
-    - action: utter_utr_entered_but_no_challan
-
-- rule: respond to no transaction for UTR
-  steps:
-    - intent: no_transaction_for_utr
-    - action: utter_no_transaction_for_utr
-
-- rule: respond to incomplete NEFT payment
-  steps:
-    - intent: incomplete_neft_payment
-    - action: utter_incomplete_neft_payment
-
-- rule: respond to aggregator role
-  steps:
-    - intent: aggregator_role
-    - action: utter_aggregator_role
-
-- rule: respond to aggregator payment modes
-  steps:
-    - intent: aggregator_payment_modes
-    - action: utter_aggregator_payment_modes
-    
-- rule: show end/continue buttons on thank you or end intent
-  steps:
-    - intent: thank_you
-    - action: utter_thank_you
-
-- rule: also show end/continue buttons on end intent
-  steps:
-    - intent: end_conversation
-    - action: utter_thank_you
+    - intent: not_helpful
+    - action: action_handle_not_helpful
