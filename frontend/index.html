@@ -6,32 +6,37 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Floating Chatbot Icon -->
-  <div id="chat-icon" title="Chat with us">💬</div>
+  <!-- Floating Icon -->
+  <div id="chat-icon" title="Chat with us">🗨️</div>
 
   <!-- Chat Window -->
   <div class="chat-wrapper hidden" id="chat-wrapper">
     <header class="chat-header">
       <h1>Bharatkosh Chatbot</h1>
       <div class="header-buttons">
-        <!-- DO NOT add trash or end buttons here -->
         <button id="theme-toggle" title="Toggle dark mode">🌙</button>
         <button id="chat-close" title="Close chat">❌</button>
       </div>
     </header>
 
     <div class="chat-container">
+      <!-- Chat Messages -->
       <div id="chat-box" class="chat-box"></div>
 
-      <!-- Input area -->
+      <!-- Feedback + End Buttons -->
+      <div class="chat-footer-buttons">
+        <button id="helpful-btn">Helpful</button>
+        <button id="not-helpful-btn">Not Helpful</button>
+        <button id="end-button" class="end-red">End</button>
+      </div>
+
+      <!-- Input Section -->
       <div class="input-wrapper">
         <form id="chat-form" class="chat-form">
           <input id="user-input" type="text" placeholder="Ask me anything..." autocomplete="off" />
           <button type="submit">➤</button>
         </form>
       </div>
-
-      <!-- DO NOT hardcode end-convo button here -->
     </div>
   </div>
 

@@ -10,12 +10,10 @@ const RASA_URL = "http://127.0.0.1:5005/webhooks/rest/webhook";
 
 let conversationEnded = false;
 
-// 🟥 END/CONTINUE CONVO button
-const endButton = document.createElement("button");
-endButton.textContent = "End Conversation";
-endButton.id = "end-button";
-endButton.classList.add("end-btn");
-chatWrapper.querySelector(".chat-container").appendChild(endButton);
+// ⬇️ Get static buttons from DOM
+const endButton = document.getElementById("end-button");
+const helpfulBtn = document.getElementById("helpful-btn");
+const notHelpfulBtn = document.getElementById("not-helpful-btn");
 
 endButton.addEventListener("click", () => {
   conversationEnded = !conversationEnded;
@@ -24,41 +22,16 @@ endButton.addEventListener("click", () => {
     userInput.disabled = true;
     chatForm.querySelector("button").disabled = true;
     userInput.placeholder = "Conversation ended";
-    endButton.textContent = "Continue Conversation";
+    endButton.textContent = "Continue";
     endButton.style.backgroundColor = "#007bff";
   } else {
     userInput.disabled = false;
     chatForm.querySelector("button").disabled = false;
     userInput.placeholder = "Ask me anything...";
-    endButton.textContent = "End Conversation";
+    endButton.textContent = "End";
     endButton.style.backgroundColor = "#dc3545";
   }
 });
-
-// 🟣 Helpful / Not Helpful persistent buttons
-const feedbackContainer = document.createElement("div");
-feedbackContainer.style.display = "flex";
-feedbackContainer.style.justifyContent = "center";
-feedbackContainer.style.gap = "10px";
-feedbackContainer.style.margin = "0 12px 12px";
-
-const helpfulBtn = document.createElement("button");
-helpfulBtn.innerText = "Helpful";
-helpfulBtn.style.backgroundColor = "#6f42c1";
-helpfulBtn.style.color = "white";
-helpfulBtn.style.border = "none";
-helpfulBtn.style.borderRadius = "10px";
-helpfulBtn.style.padding = "8px 12px";
-helpfulBtn.style.cursor = "pointer";
-
-const notHelpfulBtn = document.createElement("button");
-notHelpfulBtn.innerText = "Not Helpful";
-notHelpfulBtn.style.backgroundColor = "#6f42c1";
-notHelpfulBtn.style.color = "white";
-notHelpfulBtn.style.border = "none";
-notHelpfulBtn.style.borderRadius = "10px";
-notHelpfulBtn.style.padding = "8px 12px";
-notHelpfulBtn.style.cursor = "pointer";
 
 helpfulBtn.onclick = () => {
   if (!conversationEnded) {
@@ -75,10 +48,6 @@ notHelpfulBtn.onclick = () => {
     sendMessageToBot("not helpful");
   }
 };
-
-feedbackContainer.appendChild(helpfulBtn);
-feedbackContainer.appendChild(notHelpfulBtn);
-chatWrapper.querySelector(".chat-container").appendChild(feedbackContainer);
 
 // 🗑️ Trash button
 const trashBtn = document.createElement("button");
@@ -99,7 +68,7 @@ trashBtn.onclick = () => {
     userInput.disabled = false;
     chatForm.querySelector("button").disabled = false;
     userInput.placeholder = "Ask me anything...";
-    endButton.textContent = "End Conversation";
+    endButton.textContent = "End";
     endButton.style.backgroundColor = "#dc3545";
     conversationEnded = false;
   }
@@ -180,7 +149,7 @@ async function sendMessageToBot(message) {
           userInput.disabled = true;
           chatForm.querySelector("button").disabled = true;
           userInput.placeholder = "Conversation ended";
-          endButton.textContent = "Continue Conversation";
+          endButton.textContent = "Continue";
           endButton.style.backgroundColor = "#007bff";
           conversationEnded = true;
         }
